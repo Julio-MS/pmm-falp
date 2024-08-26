@@ -19,10 +19,15 @@ class Utils:
         path = os.path.join(self.root, study_id, image_id + '.dicom')
         return path
 
-    def show_image(self, image_id, cmap, bbox=True):
+    def show_image(self, image_id, cmap='gray', bbox=True, metadata=True, finding=None):
 
-        row = self.findings.loc[(self.findings['image_id'] == image_id)]
-        row.reset_index(inplace=True, drop=True)
+        if finding:
+            row = self.findings.loc[(self.findings['image_id'] == image_id) &
+                                    (self.findings['finding_categories'] == finding)]
+            row.reset_index(inplace=True, drop=True)
+        else:
+            row = self.findings.loc[(self.findings['image_id'] == image_id)]
+            row.reset_index(inplace=True, drop=True)
 
         image_path = self.get_path(image_id)
         dicom = pydicom.dcmread(image_path)
@@ -38,8 +43,13 @@ class Utils:
             print("No findings")
 
         for index, item in row.iterrows():
-            print(
-                f"{index + 1} - {colors[index]} - finding_categories: {row.loc[index]['finding_categories']}, finding_birads: {row.loc[index]['finding_birads']}")
+            if metadata:
+                print(
+                    f"{index + 1} - {colors[index]} - finding_categories: {row.loc[index]['finding_categories']}, "
+                    f"\nfinding_birads: {row.loc[index]['finding_birads']}, "
+                    f"breast_birads: {row.loc[index]['breast_birads']}, "
+                    f"Photometric Interpretation: {dicom.PhotometricInterpretation}"
+                )
             # Coordenadas del punto superior izquierdo (x1, y1) y punto inferior derecho (x2, y2)
             x1, y1 = row['xmin'].values[index], row['ymin'].values[index]
             x2, y2 = row['xmax'].values[index], row['ymax'].values[index]
@@ -56,3 +66,22 @@ class Utils:
         # Mostrar la imagen con el rectángulo
         plt.axis('off')
         plt.show()
+
+    def show_sample(self, finding_categories):
+
+        print(type(finding_categories))
+        sample = self.findings.loc[self.findings['finding_categories'] == finding_categories]
+        sample.reset_index(drop=True, inplace=True)
+
+        fig, ax = plt.subplots(2, 3, figsize=(15, 10))
+
+        for index, row in sample.iterrows():
+            if index < 6:
+                i = index//3
+                j = index%3
+                ax[i, j].imshow(self.show_image(row['image_id'], finding=finding_categories, metadata=False))
+
+                #print(row)
+            else:
+                break
+
