@@ -19,7 +19,7 @@ class Utils:
         path = os.path.join(self.root, study_id, image_id + '.dicom')
         return path
 
-    def show_image(self, image_id, cmap='gray', bbox=True, metadata=True, finding=None):
+    def show_image(self, image_id, cmap='gray', bbox=True, metadata=True, finding=None, ax=None):
 
         if finding:
             row = self.findings.loc[(self.findings['image_id'] == image_id) &
@@ -33,9 +33,13 @@ class Utils:
         dicom = pydicom.dcmread(image_path)
 
         arr = apply_voi_lut(dicom.pixel_array, dicom)
-        plt.imshow(arr, cmap=cmap)
+
+        if ax is None:
+            # Crear la figura y el eje
+            fig, ax = plt.subplots()
+
+        ax.imshow(arr, cmap=cmap)
         # Obtener el eje actual
-        ax = plt.gca()
 
         colors = ["red", "blue", "green"]
 
@@ -63,25 +67,44 @@ class Utils:
             if bbox:
                 ax.add_patch(rect)
 
-        # Mostrar la imagen con el rectángulo
-        plt.axis('off')
-        plt.show()
+        if ax is None:
+            # Mostrar la imagen con el rectángulo
+            plt.axis('off')
+            plt.show()
+
+        return ax
 
     def show_sample(self, finding_categories):
 
-        print(type(finding_categories))
         sample = self.findings.loc[self.findings['finding_categories'] == finding_categories]
         sample.reset_index(drop=True, inplace=True)
 
-        fig, ax = plt.subplots(2, 3, figsize=(15, 10))
+        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 
         for index, row in sample.iterrows():
             if index < 6:
-                i = index//3
-                j = index%3
-                ax[i, j].imshow(self.show_image(row['image_id'], finding=finding_categories, metadata=False))
+                i = index // 3
+                j = index % 3
 
-                #print(row)
+                ax = axes[i, j]
+
+                self.show_image(row['image_id'], finding=finding_categories, metadata=False, ax=ax)
+                #ax.axis('off')
+                ax.set_title(row['image_id'])
+
             else:
                 break
 
+        for i in range(2):
+            for j in range(3):
+                axes[i, j].axis('off')
+
+        to_delite = ["'", "[", "]"]
+        title = finding_categories
+
+        for char in to_delite:
+            title = title.replace(char, '')
+
+        fig.suptitle(title)
+        plt.tight_layout()
+        plt.show()
