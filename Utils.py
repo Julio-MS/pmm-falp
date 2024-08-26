@@ -11,13 +11,20 @@ class Utils:
         self.findings = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/finding_annotations.csv')
 
     def get_path(self, image_id):
+        # Filtrar las filas que coincidan con el image_id
         row = self.findings[self.findings['image_id'] == image_id]
-        if len(row) > 0:
-            row = row.iloc[0].squeeze()  # Seleccionar la primera fila y convertirla a Serie
 
-        study_id = row['study_id']
-        path = os.path.join(self.root, study_id, image_id + '.dicom')
-        return path
+        # Verificar si se encontró alguna fila
+        if not row.empty:
+            # Seleccionar la primera fila y convertirla a Serie
+            row = row.iloc[0].squeeze()
+            study_id = row['study_id']
+
+            # Construir la ruta
+            path = os.path.join(self.root, study_id, image_id + '.dicom')
+            return path
+        else:
+            raise ValueError(f"No se encontró ninguna entrada para el image_id: {image_id}")
 
     def show_image(self, image_id, cmap='gray', bbox=True, metadata=True, finding=None, ax=None):
 
