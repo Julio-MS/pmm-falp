@@ -4,7 +4,7 @@
 
 - [x] Comprender Windowing y VOI LUT
 - [x] Visualizar muestras de los tipos de hallazgos
-- [ ] Revisar que todas las imágenes tengan VOI LUT o Windowing
+- [x] Revisar que todas las imágenes tengan VOI LUT o Windowing
 - [ ] Convertir a PNG usando los datos de la imagen
 - [ ] Modelo YOLO de detección para 1 tipo de hallazgo
 
