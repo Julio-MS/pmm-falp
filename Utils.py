@@ -26,6 +26,11 @@ class Utils:
         else:
             raise ValueError(f"No se encontró ninguna entrada para el image_id: {image_id}")
 
+    def get_dicom_data(self, image_id):
+        path = self.get_path(image_id)
+        ds = pydicom.dcmread(path)
+        return ds
+
     def show_image(self, image_id, cmap='gray', bbox=True, metadata=True, finding=None, ax=None):
 
         if finding:
