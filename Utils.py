@@ -53,7 +53,7 @@ class Utils:
         ax.imshow(arr, cmap=cmap)
         # Obtener el eje actual
 
-        colors = ["red", "blue", "green"]
+        colors = ["red", "blue", "green", "orange", "purple", "cyan", "magenta", "yellow", "pink", 'brown']
 
         if len(row) == 0:
             print("No findings")
