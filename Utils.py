@@ -5,10 +5,11 @@ import matplotlib.patches as patches
 from pydicom.pixel_data_handlers.util import apply_voi_lut
 import pandas as pd
 
+
 class Utils:
-    def __init__(self):
-        self.root = '/Users/julio/Documentos-Local/data/VinDr-Mammo/images'
-        self.findings = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/finding_annotations.csv')
+    root = '/Users/julio/Documentos-Local/data/VinDr-Mammo/images'
+    findings = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/finding_annotations.csv')
+    metadata = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/metadata.csv')
 
     def get_path(self, image_id):
         # Filtrar las filas que coincidan con el image_id
@@ -83,8 +84,8 @@ class Utils:
             # Mostrar la imagen con el rectángulo
             plt.axis('off')
             plt.show()
-
-        return ax
+        else:
+            return ax
 
     def show_sample(self, finding_categories):
 
