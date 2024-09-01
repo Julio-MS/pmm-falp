@@ -10,6 +10,7 @@ class Utils:
     root = '/Users/julio/Documentos-Local/data/VinDr-Mammo/images'
     findings = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/finding_annotations.csv')
     metadata = pd.read_csv('/Users/julio/Documentos-Local/data/VinDr-Mammo/metadata.csv')
+    images_metadata = pd.read_csv('/Users/julio/Documents/PMM/Codigos/Test1/Detection/images_metadata.csv')
 
     def get_path(self, image_id):
         # Filtrar las filas que coincidan con el image_id
@@ -121,3 +122,22 @@ class Utils:
         fig.suptitle(title)
         plt.tight_layout()
         plt.show()
+
+    def get_group(self, image_id):
+
+        row = self.images_metadata.loc[(self.images_metadata['image_id'] == image_id)]
+
+        if not row.empty:
+            row = row.iloc[0]  # Obtener una serie para realizar las comparaciones
+        else:
+
+            return "Image ID not found"
+
+        if row['PhI'] == 'MONOCHROME1':
+            return "G1"
+
+        elif row['Win Explanation'] == "['CURRENT', 'STANDARD', 'CONTRAST', 'SMOOTH', 'CUSTOM']":
+            return "G2"
+
+        else:
+            return "G3"
