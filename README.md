@@ -5,13 +5,14 @@
 - [x] Comprender Windowing y VOI LUT
 - [x] Visualizar muestras de los tipos de hallazgos
 - [x] Revisar que todas las imágenes tengan VOI LUT o Windowing
-- [ ] Convertir a PNG usando los datos de la imagen
-- [ ] Modelo YOLO de detección para 1 tipo de hallazgo
+- [x] Convertir a PNG usando los datos de la imagen
+- [ ] ~~Modelo YOLO de detección para 1 tipo de hallazgo~~
 
 
 ## Archivos
 
 - `Image_Exploration.ipynb` Notebook principal. Exploración de imágenes y las diferentes categorías de hallazgos, junto con los metadatos necesarios para hacer el proceso de **Windowing**.
+- `Image_Classification.ipynb` Creación de sub set de imágenes según características de visualización
 - `Utils.py` Clase que contiene diferentes funciones para visualizar imágenes.
 
 #### Antiguos
