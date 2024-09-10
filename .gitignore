@@ -1,6 +1,12 @@
-data/**
+Detection/data/**
+Detection/**/.DS_Store
+Detection/.idea/
+Detection/**/.ipynb_checkpoints/
+Detection/**/__pycache__/
+Clasification/data/**
+Clasification/**/.DS_Store
+Clasification/.idea/
+Clasification/**/.ipynb_checkpoints/
+Clasification/**/__pycache__/
 **/.DS_Store
 .idea/
-**/.ipynb_checkpoints/
-**/.idea/
-**/__pycache__
