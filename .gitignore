@@ -8,5 +8,11 @@ Clasification/**/.DS_Store
 Clasification/.idea/
 Clasification/**/.ipynb_checkpoints/
 Clasification/**/__pycache__/
+
+Classification/**/.ipynb_checkpoints/
+Classification/**/__pycache__/
+Classification/.idea/
+Classification/weights
+**/TF_test.ipynb
 **/.DS_Store
 .idea/
