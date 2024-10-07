@@ -16,3 +16,6 @@ Classification/weights
 **/TF_test.ipynb
 **/.DS_Store
 .idea/
+
+# ViT Classification
+Classification-ViT/SavedModels
