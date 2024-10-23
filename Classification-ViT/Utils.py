@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def confusion_matrix(samples_, predictions_):
+def confusion_matrix(samples_, predictions_, class_names):
     
     # Cargar la métrica de 'confusion_matrix'
     confusion_matrix_ = evaluate.load("confusion_matrix")
@@ -13,7 +13,7 @@ def confusion_matrix(samples_, predictions_):
 
     # Visualizar la matriz de confusión
     plt.figure(figsize=(8, 6))
-    sns.heatmap(results['confusion_matrix'], annot=True, fmt="d", cmap="Blues")
+    sns.heatmap(results['confusion_matrix'], annot=True, fmt="d", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
     plt.xlabel("Predicted Label")
     plt.ylabel("True Label")
     plt.title("Confusion Matrix")
