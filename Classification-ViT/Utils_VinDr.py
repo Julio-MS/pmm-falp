@@ -153,7 +153,8 @@ class Utils:
         arr = dicom.pixel_array
         return arr
 
-    def win_operation_save(self, image_name, categoria, index):
+    def win_operation_save(self, image_name, path_to_save='/Users/julio/Library/Mobile Documents/com~apple~CloudDocs/Downloads',
+                           name='image'):
 
         image_id = image_name.split('_')[0]
         image_path = self.get_path(image_id)
@@ -180,10 +181,13 @@ class Utils:
 
         # Convertir la imagen a uint8 para su visualización
         img_windowed = img_windowed.astype(np.uint8)
-        save_path_png = f'/Users/julio/Documentos-Local/data/Demo/PNG/{categoria}_{index}.png'
-        cv2.imwrite(save_path_png,img_windowed)
 
-
+        save_path_png = f'{path_to_save}/{name}.png'
+        success = cv2.imwrite(save_path_png, img_windowed)
+        if success:
+            print(f"Imagen guardada exitosamente en {path_to_save}.")
+        else:
+            print("Error al guardar la imagen.")
 
     def copy_dcm(self, image_name, categoria, index):
 
